@@ -36,9 +36,9 @@
         
         function setTable(freq_dict){
             let result ="";
-
+                result+="   variable -  Key\n\n";
                 for(var key in freq_dict ){
-                    result += '   '+key+" : "+freq_dict[key]+'\n';
+                    result += '      '+key+"    :    "+freq_dict[key]+'\n\n';
                 }
             table.innerText=result;
         }
