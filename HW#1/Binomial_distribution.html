@@ -26,7 +26,7 @@
             Probability of success = <input type=number id="probability" value="0" ><br><br>
             Total number of trials = <input type=number id="trial" value="0" ><br><br>
             Amount of successes = <input type=number id="succes" value="0" ><br><br>
-
+            <button onclick="calculate(succes.value,probability.value)">calculate</button>
 
         </div>
 
@@ -41,11 +41,6 @@
         var total_number_of_trials=4;
         function setTable(){
             var result="";
-            /*amount_of_success.forEach(
-                
-                success_rate=> probability_range.forEach(probability => result += ' '+calculate(success_rate,probability))
-            );*/
-
             result+='      '
             probability_range.forEach(probability=>result+=probability+'     ');
             result+='\n';
@@ -59,7 +54,7 @@
             table.innerText+=result;
         }
 
-        function calculate(success_rate,probability){
+        function calculate(success_rate,probability,total_trial=4){
             let first=factorial(total_number_of_trials)/(factorial(success_rate)*factorial(total_number_of_trials-success_rate));
             let prob=Math.pow(probability,success_rate);
             let last=Math.pow((1-probability),(total_number_of_trials-success_rate));
