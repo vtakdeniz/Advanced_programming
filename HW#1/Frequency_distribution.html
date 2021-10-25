@@ -25,7 +25,7 @@
             <p>Please enter all necessary variables. After you finish, press enter.</p><br> 
             Probability of success = <input type=number id="probability" value="0" ><br><br>
             Total number of trials = <input type=number id="trial" value="0" ><br><br>
-            Amount of successes = <input type=number id="success" value="0" ><br><br>
+            Amount of successes = <input type=number id="succes" value="0" ><br><br>
             <button type="button" onclick="setResult()">calculate</button>
             <p id="result"></p>
         </div>
@@ -70,7 +70,7 @@
         }
 
         function setResult(){
-            result.innerText=calculate(success.value,probability.value,trial.value);
+            console.log("ada");
         }
         setTable();
     
