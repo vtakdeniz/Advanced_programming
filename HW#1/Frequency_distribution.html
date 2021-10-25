@@ -7,7 +7,6 @@
     <title>Frequency Distribution</title>
     <style>
         #table{
-            font-size: x-large;
             background-color: aqua;
         }
 
@@ -23,8 +22,12 @@
     <div>
         <div id="header">
             <h2>Frequency Distribution Table</h2><br>
-            <p>Please enter the "," character after each preceding variable. After you finish, press enter.</p><br> 
-            variables = <input type=text id="variables" value="a,b,c,c,c,d,d,d,d,d,d" onChange="calculateFreq()">
+            <p>Please enter all necessary variables. After you finish, press enter.</p><br> 
+            Probability of success = <input type=number id="probability" value="0" ><br><br>
+            Total number of trials = <input type=number id="trial" value="0" ><br><br>
+            Amount of successes = <input type=number id="succes" value="0" ><br><br>
+
+
         </div>
 
         <div id="table-div">
@@ -33,26 +36,45 @@
     </div>
 </body>
     <script>
-        
-        function setTable(freq_dict){
-            let result ="";
-                result+="   variable -  Key\n\n";
-                for(var key in freq_dict ){
-                    result += '      '+key+"    :    "+freq_dict[key]+'\n\n';
+        var probability_range=[	0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8];
+        var amount_of_success=[0,1,2,3,4];
+        var total_number_of_trials=4;
+        function setTable(){
+            var result="";
+            /*amount_of_success.forEach(
+                
+                success_rate=> probability_range.forEach(probability => result += ' '+calculate(success_rate,probability))
+            );*/
+
+            result+='      '
+            probability_range.forEach(probability=>result+=probability+'     ');
+            result+='\n';
+            for (let success_index=0; success_index<amount_of_success.length; success_index++){
+                result+=amount_of_success[success_index]+'  ';
+                for(let probability_index=0; probability_index<probability_range.length;probability_index++){
+                    result+='   '+calculate(amount_of_success[success_index],probability_range[probability_index]).toFixed(4);
                 }
-            table.innerText=result;
+                result+='\n';
+            }
+            table.innerText+=result;
         }
 
-        function calculateFreq(){
-            let freq_dict={};
-            let array = variables.value.split(",");
-
-            array.forEach(element => {
-                freq_dict[element] = freq_dict[element]?(freq_dict[element]+1) : 1 ;
-            });
-            
-            setTable(freq_dict);
+        function calculate(success_rate,probability){
+            let first=factorial(total_number_of_trials)/(factorial(success_rate)*factorial(total_number_of_trials-success_rate));
+            let prob=Math.pow(probability,success_rate);
+            let last=Math.pow((1-probability),(total_number_of_trials-success_rate));
+            return first*prob*last;
         }
 
+        function factorial(n){
+            if(n == 0 || n == 1){
+                return 1;
+            }else{
+                return n * factorial(n-1);
+            }
+        }
+
+        setTable();
+    
     </script>
 </html>
