@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency Distribution</title>
+    <style>
+        #table{
+            font-size: x-large;
+            background-color: aqua;
+        }
+
+        #header{
+            background-color: yellow;
+            margin: 0 auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <div id="header">
+            <h2>Frequency Distribution Table</h2><br>
+            <p>Please enter the "," character after each preceding variable. After you finish, press enter.</p><br> 
+            variables = <input type=text id="variables" value="a,b,c,c,c,d,d,d,d,d,d" onChange="calculateFreq()">
+        </div>
+
+        <div id="table-div">
+            <pre id="table"></pre>
+        </div>
+    </div>
+</body>
+    <script>
+        
+        function setTable(freq_dict){
+            let result ="";
+
+                for(var key in freq_dict ){
+                    result += '   '+key+" : "+freq_dict[key]+'\n';
+                }
+            table.innerText=result;
+        }
+
+        function calculateFreq(){
+            let freq_dict={};
+            let array = variables.value.split(",");
+
+            array.forEach(element => {
+                freq_dict[element] = freq_dict[element]?(freq_dict[element]+1) : 1 ;
+            });
+            
+            setTable(freq_dict);
+        }
+
+    </script>
+</html>
