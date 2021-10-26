@@ -21,8 +21,9 @@
 <body>
     <div>
         <div id="header">
-            <h2>Frequency Distribution Table</h2><br>
-            <p>Please enter all necessary variables. After you finish, press enter.</p><br> 
+            <h2>Binomial Distribution Table</h2><br>
+            <p>Please enter all necessary variables. After you finish, press the button.</p><br>
+            <em>Note : </em> Total number of trials cannot be smaller than amount of successes.<br><br>
             Probability of success = <input type=number id="probability" value="0" ><br><br>
             Total number of trials = <input type=number id="trial" value="0" ><br><br>
             Amount of successes = <input type=number id="success" value="0" ><br><br>
@@ -45,7 +46,9 @@
             probability_range.forEach(probability=>result+=probability+'     ');
             result+='\n\n';
             for (let success_index=0; success_index<amount_of_success.length; success_index++){
+                
                 result+='Amount of success : '+amount_of_success[success_index]+'  ';
+
                 for(let probability_index=0; probability_index<probability_range.length;probability_index++){
                     result+='   '+calculate(amount_of_success[success_index],probability_range[probability_index]).toFixed(4);
                 }
