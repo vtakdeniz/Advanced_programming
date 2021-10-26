@@ -55,6 +55,7 @@
         }
 
         function calculate(success_rate,probability,total_trial=4){
+            console.log(success_rate+'  '+probability+'     '+total_trial)
             let first=factorial(total_trial)/(factorial(success_rate)*factorial(total_trial-success_rate));
             let prob=Math.pow(probability,success_rate);
             let last=Math.pow((1-probability),(total_trial-success_rate));
