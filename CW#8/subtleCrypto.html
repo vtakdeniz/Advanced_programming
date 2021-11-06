@@ -29,8 +29,8 @@
 
 <div>
   URL: 
-  <input type=text id=remote onchange='displayURL(this.value)'> <br>
-  <input type=file id=button onChange='shaFromFile(this.files[0])'>
+  <input type=text id=remote onchange='displayURL(this.value);console.log("Calculating hash from remote file...")'> <br>
+  <input type=file id=button onChange='shaFromFile(this.files[0]);console.log("Calculating hash from local file...")'>
 </div>
 <div id=msg>Select text or image </div>
 <pre id=disp1></pre> <img id=disp2 />
@@ -50,13 +50,15 @@ const RDR = new FileReader();
 function displayURL(u){
     fetch(u).then(r => r.blob())
             .then(shaFromFile)
-            .catch(console.log)
+            .catch(error=>{console.log(error);
+              disp1.innerText=error})
 }
 
 function shaFromBuffer(buf){
   crypto.subtle.digest('SHA-1',buf)
-  .then(b=>disp1.innerText=bufferToHex(b))
-  .catch(console.error)
+  .then(b=>{disp1.innerText=bufferToHex(b);
+    console.log(bufferToHex(b))})
+  .catch(error=>console.log(error))
 }
 
 function shaFromFile(f){
@@ -74,10 +76,8 @@ function bufferToHex(buf){
 }
 
 function report(str){
-
 msg.innerText = str;
 console.log(str);
-
 }
 
 function toHex(str){
@@ -85,7 +85,7 @@ function toHex(str){
 }
 
 title.innerText = document.title
-sample.innerText = displayURL+'\n'+report+'\n'+shaFromBuffer+'\n'+shaFromFile
+sample.innerText = displayURL+'\n'+shaFromBuffer+'\n'+shaFromFile+'\n'+report+'\n'+toHex
 </script>
 
 </body>
