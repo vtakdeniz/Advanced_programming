@@ -30,7 +30,7 @@
 <div>
   URL: 
   <input type=text id=remote onchange='displayURL(this.value);console.log("Calculating hash from remote file...")'> <br>
-  <input type=file id=button onChange='shaFromFile(this.files[0]);console.log("Calculating hash from local file...")'>
+  <input type=file id=button onChange='calculateHash(this.files[0]);console.log("Calculating hash from local file...")'>
 </div>
 <div id=msg>Select text or image </div>
 <pre id=disp1></pre> <img id=disp2 />
@@ -49,35 +49,34 @@
 const RDR = new FileReader();
 function displayURL(u){
     fetch(u).then(r => r.blob())
-            .then(shaFromFile)
+            .then(calculateHash)
             .catch(error=>{console.log(error);
               disp1.innerText=error})
 }
 
-function shaFromBuffer(buf){
-  crypto.subtle.digest('SHA-1',buf)
-  .then(b=>{disp1.innerText=bufferToHex(b);
-    console.log(bufferToHex(b))})
-  .catch(error=>console.log(error))
-}
-
-function shaFromFile(f){
-  f.arrayBuffer()
-    .then(shaFromBuffer);
-}
-
-function shaFromUrl(u){
-  fetch(u).then(r=>r.arrayBuffer())
-    .then(shaFromBuffer)
+function calculateHash(objToCalc){
+  if(objToCalc instanceof Blob){
+    objToCalc.arrayBuffer()
+    .then((buf)=>{
+          crypto.subtle.digest('SHA-1',buf)
+          .then(b=>{disp1.innerText=bufferToHex(b);
+          console.log(bufferToHex(b))})
+          .catch(error=>console.log(error))
+        })
+  }
+  else if(objToCalc instanceof File){
+    objToCalc.arrayBuffer()
+      .then((buf)=>{
+          crypto.subtle.digest('SHA-1',buf)
+          .then(b=>{disp1.innerText=bufferToHex(b);
+          console.log(bufferToHex(b))})
+          .catch(error=>console.log(error))
+      });
+  }
 }
 
 function bufferToHex(buf){
   return [...new Uint8Array(buf)].map(toHex).join('');
-}
-
-function report(str){
-msg.innerText = str;
-console.log(str);
 }
 
 function toHex(str){
@@ -85,7 +84,7 @@ function toHex(str){
 }
 
 title.innerText = document.title
-sample.innerText = displayURL+'\n'+shaFromBuffer+'\n'+shaFromFile+'\n'+report+'\n'+toHex
+sample.innerText = displayURL+'\n'+calculateHash+'\n'+bufferToHex+'\n'+toHex
 </script>
 
 </body>
