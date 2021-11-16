@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,10 +34,13 @@
         <div id="table-div">
             <pre id="table"></pre>
         </div>
+        <pre id="code"></pre>
+        <br>
+        <img src="table.png" width="700" height="450">
     </div>
 </body>
     <script>
-        var probability_range=[	0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8];
+        var probability_range=[	0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5];
         var amount_of_success=[0,1,2,3,4];
         var total_number_of_trials=4;
         function setTable(){
@@ -78,5 +81,6 @@
         }
         setTable();
     
+    code.innerText=setTable+"\n"+calculate+"\n";
     </script>
 </html>
