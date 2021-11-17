@@ -36,28 +36,33 @@
         </div>
         <pre id="code"></pre>
         <br>
-        <img src="table.png" width="700" height="350">
+        <img src="table.png" width="700" height="200">
     </div>
 </body>
     <script>
-        var probability_range=[	0.01,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45];
+        var probability_range=[	0.01,0.05,0.1,0.15,0.2,0.25];
         var amount_of_success=[0,1,2,3,4];
         var total_number_of_trials=4;
         function setTable(){
         var result="Amount of trials : 4\n\n";
         result+='probability:                 ';
-        probability_range.forEach(probability=>result+=probability+'     ');
+        probability_range
+        .forEach(probability=>result+=probability+'     ');
         result+='\n\n';
-        for (let success_index=0; success_index<amount_of_success.length; success_index++){
+        for (let success_index=0; 
+        success_index<amount_of_success.length; success_index++){
         result+='Amount of success : '+amount_of_success[success_index]+'  ';
-        for(let probability_index=0; probability_index<probability_range.length;probability_index++){
-        result+='   '+calculate(amount_of_success[success_index],probability_range[probability_index])
+        for(let probability_index=0;
+        probability_index<probability_range.length;probability_index++){
+        result+='   '+
+        calculate(amount_of_success[success_index],probability_range[probability_index])
         .toFixed(4);}
         result+='\n';
         }table.innerText+=result;}
 
         function calculate(success_rate,probability,total_trial=4){
-        let first=factorial(total_trial)/(factorial(success_rate)*factorial(total_trial-success_rate));
+        let first=factorial(total_trial)
+        /(factorial(success_rate)*factorial(total_trial-success_rate));
         let prob=Math.pow(probability,success_rate);
         let last=Math.pow((1-probability),(total_trial-success_rate));
         return first*prob*last;
