@@ -82,7 +82,7 @@ async function readUser() {
     out.innerHTML += "<b>Company : </b>"+company+BR
     let repo = u.public_repos
     let repo_names = await toJSON(URL+u.login+"/repos")
-    out.innerHTML += "<b>Github.io page : </b>"+repo_names.filter(r => r.name.endsWith(".github.io")).map(r=>r.name)
+    out.innerHTML += "<b>Github.io page : </b>"+`<a href="https://${repo_names.filter(r => r.name.endsWith(".github.io")).map(r=>r.name)}" target=NewTab>${repo_names.filter(r => r.name.endsWith(".github.io")).map(r=>r.name)}</a>`
 }
     title.innerText = document.title
     out.innerText = document.title
