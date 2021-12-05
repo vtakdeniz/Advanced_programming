@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+  <style>
+    
+    #main {
+      font-size: 40px;
+      background:beige;
+      width: 300px;
+      height: 240px;
+      position: relative;
+      text-align: center;
+    }
+    #ad, #va,#nc,#ed,#alg {
+      position:absolute;
+
+    }
+    #ad {
+      color: blue;
+      top: 10px;
+      left:50px;
+    }
+    #va {
+      color: blue;
+      top: 10px;
+      left:100px;
+    }
+    #nc {
+      color: blue;
+      top: 10px;
+      left:140px;
+    }
+    #ed {
+      color: blue;
+      top: 10px;
+      left:180px;
+    }
+    
+    #alg {
+      background: rgba(0, 0, 0, 0);
+      color: #da0;
+      top: 50px;
+      left:50px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+
+<div id="main" onClick="main.animate(t2, 5000)">
+  <span id="ad">Ad</span>
+  <span id="va">va</span>
+  <span id="nc">nc</span>
+  <span id="ed">ed</span>
+  <span id="alg">Algorithm</span>
+</div>
+
+<button onClick="ad .animate(rotate, 5000);va .animate(rotate, 5000);nc .animate(rotate, 5000);ed .animate(rotate, 5000);">Rotate</button>
+<button onClick="alg .animate(shake, 6000)">Shake</button>
+
+
+
+<script>
+let
+  rotate = { transform: ["translateX(0)","rotate(0)", "rotate(45deg)","translateX(290px)", "rotate(90deg)","rotate(0)", "rotate(-270deg)","translateX(0)", "rotate(0)"] },
+  shake=[
+    { transform: 'scale(1)', background: 'red', opacity: 1, offset: 0 },
+    { transform: 'scale(.5) rotate(270deg)', background: 'blue', opacity: .5, offset: .2 },
+    { transform: 'scale(1) rotate(0deg)', background: 'red', opacity: 1, offset: 1 }
+    ]
+  
+</script>
+
+</body>
+</html>
