@@ -59,7 +59,7 @@
   <span id="alg">Algorithm</span>
 </div>
 
-<button onClick="ad .animate(rotate, 5000);va .animate(rotate, 5000);nc .animate(rotate, 5000);ed .animate(rotate, 5000);">Rotate</button>
+<button onClick="ad .animate(rotate, 5000);va .animate(rotate_reverse, 5000);nc .animate(rotate, 5000);ed .animate(rotate_reverse, 5000);">Rotate</button>
 <button onClick="alg .animate(shake, 6000)">Shake</button>
 
 
@@ -67,6 +67,7 @@
 <script>
 let
   rotate = { transform: ["translateX(0)","rotate(0)", "rotate(45deg)","translateX(290px)", "rotate(90deg)","rotate(0)", "rotate(-270deg)","translateX(0)", "rotate(0)"] },
+  rotate_reverse = { transform: ["translateX(0)","rotate(0)", "rotate(-45deg)","translateX(-290px)", "rotate(-90deg)","rotate(0)", "rotate(270deg)","translateX(0)", "rotate(0)"] },
   shake=[
     { transform: 'scale(1)', background: 'red', opacity: 1, offset: 0 },
     { transform: 'scale(.5) rotate(270deg)', background: 'blue', opacity: .5, offset: .2 },
