@@ -58,15 +58,19 @@
   <span id="ed">ed</span>
   <span id="alg">Algorithm</span>
 </div>
-
+  <div id="buttons">
 <button onClick="ad .animate(rotate, 5000);va .animate(rotate_reverse, 5000);nc .animate(rotate, 5000);ed .animate(rotate_reverse, 5000);">Rotate</button>
 <button onClick="alg .animate(shake, 6000)">Shake</button>
-
+  </div>
+<br><br>
+<b>Sample code</b>
+<pre id="sample"></pre>
 
 
 <script>
 let
-  rotate = { transform: ["translateX(0)","rotate(0)", "rotate(45deg)","translateX(290px)", "rotate(90deg)","rotate(0)", "rotate(-270deg)","translateX(0)", "rotate(0)"] },
+  rotate = { transform: ["translateX(0)","rotate(0)", "rotate(45deg)","translateX(290px)",
+   "rotate(90deg)","rotate(0)", "rotate(-270deg)","translateX(0)", "rotate(0)"] },
   rotate_reverse = { transform: ["translateX(0)","rotate(0)", "rotate(-45deg)","translateX(-290px)", "rotate(-90deg)","rotate(0)", "rotate(270deg)","translateX(0)", "rotate(0)"] },
   shake=[
     { transform: 'scale(1)', background: 'red', opacity: 1, offset: 0 },
@@ -74,6 +78,11 @@ let
     { transform: 'scale(1) rotate(0deg)', background: 'red', opacity: 1, offset: 1 }
     ]
   
+    sample.innerText = buttons.innerHTML
+  +'\nRotate = '+JSON.stringify(rotate)
+  +'\nRotate reverse = '+JSON.stringify(rotate_reverse)
+  +'\nShake = '+JSON.stringify(shake)
+
 </script>
 
 </body>
