@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <link rel="icon" href="../images/icon192.png">
   <title>Open Weather</title>
   <style>
     body {
@@ -32,36 +31,65 @@
         font-size: 24px;
         margin: 0;
     }
-    #yer { margin: 10px; }
-    #err { color:red }
+    #canvas_div {
+        width: 500px;
+        padding: 20px;
+        text-align: center;
+    }
+    #yer { 
+        margin: 10px; }
+    #err { 
+        color:yellow }
+    
+    #container {
+    position: relative;
+    }
+    
+    canvas {
+    border: 1px solid black;
+    opacity: 0.80;
+    }
+    #container canvas, #canvas_div {
+  position: absolute;
+}
   </style>
 </head>
 
+
 <body>
-<div>
-  Lat/Lon <input id=mahal type=text value="41 29">
-</div>
 
-<div id=main>
-<p id=yer>location</p>
-<p><img id=icon>
-<span id=hava>weather</span></p>
-</div>
+<div id="container">
 
-<div class=dar>
-  <b>Detail</b>
-  <pre id=detay>detail</pre>
-</div>
-<div class=dar>
-  <b>Sun</b>
-  <pre id=gunes>sunrise</pre>
-</div>
-<hr />
-<div>
-<p id=err>You need an API key for openweathermap.org 
-  <a href="https://openweathermap.org/appid" 
-   target="NewTab">here</a> 
-</p>
+<canvas id="canvas" width="550" height="900">
+</canvas>
+    <div id="canvas_div">
+        <div>
+        Lat/Lon <input id=mahal type=text value="41 29">
+        </div>
+
+        <div id=main>
+        <p id=yer>location</p>
+        <p><img id=icon>
+        <span id=hava>weather</span></p>
+        </div>
+
+        <div class=dar>
+        <b>Detail</b>
+        <pre id=detay>detail</pre>
+        </div>
+
+        <div class=dar>
+        <b>Sun</b>
+        <pre id=gunes>sunrise</pre>
+        </div>
+        <hr />
+        <div>
+        <p id=err>You need an API key for openweathermap.org 
+        <a href="https://openweathermap.org/appid" 
+        target="NewTab">here</a> 
+        </p>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -140,7 +168,6 @@ async function askWeather() {
 function showIcon(i) {
     const URL = "https://openweathermap.org/img/w/"
     icon.src = URL+i+".png"
-    document.querySelector('link').href = icon.src
 }
 function convert(kelvin){
     return (kelvin - 273.15);
@@ -181,6 +208,17 @@ mahal.onkeyup = e => {
   }
   if (e.keyCode === 27) t.blur()
 }
+
+function drawCanvas(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#6e5d74";
+    ctx.fillRect(0,0,550,900);
+}
+
+drawCanvas();
+
+
 </script>
 
 </body>
