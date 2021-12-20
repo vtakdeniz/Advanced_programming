@@ -40,8 +40,8 @@ let spanToDivDict=new Map();
 let spanToIntervalDict = new Map();
 
 let boxTime=25;
-let boxAmount=20;
-let timeLeft=1;
+let boxAmount=10;
+let timeLeft=100;
 
 let timerInterval;
 let score=0;
@@ -89,6 +89,10 @@ function checkWord(){
         score++;
         document.querySelector("#score").innerText=`Score : ${score}`
         wordToDivDict.delete(word);
+        boxAmount--;
+        if(boxAmount<1){
+            finishGame();
+        }
         setDivWord(div,true)
     }
 
@@ -103,7 +107,8 @@ async function setDivWord(div,success){
 }
 
 function decreaseTimer(){
-    if(timeLeft===1){
+    console.log(boxAmount);
+    if(timeLeft===1&&boxAmount<1){
         finishGame();
     }
     timeLeft--;
@@ -116,7 +121,7 @@ function decreaseBoxTimer(span){
         span.innerText=boxTime;
         setDivWord(spanToDivDict.get(span),false);
         boxAmount--;
-        if(boxAmount<=0){
+        if(boxAmount<1){
             finishGame();
         }
     }
