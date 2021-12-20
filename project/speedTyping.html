@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Typing</title>
+    
+</head>
+
+<body>
+    
+    <div class="word-box-container">
+
+    </div>
+
+</body>
+
+<script>
+    let wordNumber=10;
+
+    let words=fetch(`https://random-word-api.herokuapp.com/word?number=${wordNumber}&swear=0`).then(a=>a.json().then(b=>console.log(b)));
+    
+</script>
+
+</html>
