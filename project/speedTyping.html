@@ -11,21 +11,25 @@
 <body>
     <div class="main-box">
         <div class="word-box-container">
-            <div class="word-box"></div>
-            <div class="word-box"></div>
-            <div class="word-box"></div>
-            <div class="word-box"></div>
-            <div class="word-box"></div>
+            <div class="word-box" id="1"></div>
+            <div class="word-box" id="2"></div>
+            <div class="word-box" id="3"></div>
+            <div class="word-box" id="4"></div>
+            <div class="word-box" id="5"></div>
         </div>
+        <input id="inputArea" type="text" oninput="checkWord()" style="margin:10px">
+        <span id="timeLeft"></span>
     </div>
 </body>
 
 <script>
-let wordNumber=10;
+let wordNumber=document.querySelectorAll(".word-box").length;
+let wordToDivDictionary={};
+let timeLeft=4;
+let timerInterval;
 
 async function getWords(){
     let words=[];
-    console.log(words);
     let res = await fetch(`https://random-word-api.herokuapp.com/word?number=${wordNumber}&swear=0`)
     .then(res=>res.json()
     .then(w=>words.push(w))
@@ -33,9 +37,37 @@ async function getWords(){
     words=words.flat();
     return words;
 }
-let a = getWords();
+
+async function setWords(){
+    let words = await getWords();
+    let boxes=document.querySelectorAll(".word-box");
+    for(let i=0;i<words.length;i++){
+        wordToDivDictionary[words[i]]=boxes[i];
+        boxes[i].innerText=words[i];
+    }
+}
+
+function checkWord(){
+    
+}
+
+function decreaseTimer(){
+    if(timeLeft===1){
+        document.querySelector("#inputArea").disabled=true;
+        clearInterval(timerInterval);
+    }
+    timeLeft--;
+    document.querySelector("#timeLeft").innerText=timeLeft;
+}
+
+async function init(){
+    await setWords();
+    document.querySelector("#timeLeft").innerText=timeLeft;
+    timerInterval=setInterval(decreaseTimer,1000);
+}
 
 
+init();
 </script>
 
 </html>
