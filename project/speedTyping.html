@@ -11,11 +11,21 @@
 <body>
     <div class="main-box">
         <div class="word-box-container">
-            <div class="word-box" id="1"></div>
-            <div class="word-box" id="2"></div>
-            <div class="word-box" id="3"></div>
-            <div class="word-box" id="4"></div>
-            <div class="word-box" id="5"></div>
+            <div class="word-box">
+                <span class="box-timer" >x</span>
+            </div>
+            <div class="word-box">
+                <span class="box-timer" >x</span>
+            </div>
+            <div class="word-box">
+                <span class="box-timer" >x</span>
+            </div>
+            <div class="word-box">
+                <span class="box-timer" >x</span>
+            </div>
+            <div class="word-box">
+                <span class="box-timer" >x</span>
+            </div>
         </div>
         <input id="inputArea" type="text" oninput="checkWord()" style="margin:10px">
         <span id="timeLeft"></span>
@@ -25,10 +35,23 @@
 
 <script>
 let wordNumber=document.querySelectorAll(".word-box").length;
-let wordToDivDictionary=new Map();
-let timeLeft=100;
+let wordToDivDict=new Map();
+let spanToDivDict=new Map();
+let spanToIntervalDict = new Map();
+
+let boxTime=25;
+let boxAmount=20;
+let timeLeft=1;
+
 let timerInterval;
 let score=0;
+
+let animationSuccess={transform: ["rotate(0deg)", "rotate(45deg)","scale(1.5,1.5)",
+   "rotate(90deg)","rotate(270deg)","rotate(360deg)"] };
+
+let animationFail={transform: ["scale(1,1)","scale(1.1,1.1)","scale(1.2,1.2)",
+        "scale(1.5,1.5)","scale(1.2,1.2)","scale(1.1,1.1)",
+        "scale(1,1)"],background:'red'};
 
 async function getWords(){
     let words=[];
@@ -44,9 +67,8 @@ async function setWords(){
     let words = await getWords();
     let boxes=document.querySelectorAll(".word-box");
     for(let i=0;i<words.length;i++){
-        wordToDivDictionary.set(words[i],boxes[i]);
-        boxes[i].innerText=words[i];
-        console.log(wordToDivDictionary)
+        wordToDivDict.set(words[i],boxes[i]);
+        boxes[i].firstChild.nodeValue=words[i];
     }
 }
 
@@ -61,42 +83,71 @@ async function getWord(){
 
 function checkWord(){
     let word=document.querySelector("#inputArea").value;
-    let div=wordToDivDictionary.get(word);
+    let div=wordToDivDict.get(word);
     if(div){
         document.querySelector("#inputArea").value="";
         score++;
         document.querySelector("#score").innerText=`Score : ${score}`
-        wordToDivDictionary.delete(word);
-        editDiv(div)
+        wordToDivDict.delete(word);
+        setDivWord(div,true)
     }
 
 }
 
-async function editDiv(div){
+async function setDivWord(div,success){
     let word=await getWord();
-    div.innerText=word;
-    div.animate({transform: ["rotate(0deg)", "rotate(45deg)","scale(1.5,1.5)",
-   "rotate(90deg)","rotate(270deg)","rotate(360deg)"] },500);
-    wordToDivDictionary.set(word,div)
+    div.firstChild.nodeValue=word;
+    div.childNodes[1].innerText=boxTime;
+    div.animate(success?animationSuccess:animationFail,500);
+    wordToDivDict.set(word,div)
 }
 
 function decreaseTimer(){
     if(timeLeft===1){
-        document.querySelector("#inputArea").disabled=true;
-        clearInterval(timerInterval);
+        finishGame();
     }
     timeLeft--;
-    document.querySelector("#timeLeft").innerText=timeLeft;
+    document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
+}
+
+function decreaseBoxTimer(span){
+    let spanBoxTime=span.innerText;
+    if(spanBoxTime<1){
+        span.innerText=boxTime;
+        setDivWord(spanToDivDict.get(span),false);
+        boxAmount--;
+        if(boxAmount<=0){
+            finishGame();
+        }
+    }
+    else{
+        span.innerText=spanBoxTime-1;
+    }
 }
 
 async function init(){
-    //timeLeft=prompt("Please enter the time length ");
     await setWords();
-    document.querySelector("#timeLeft").innerText=timeLeft;
-    timerInterval=setInterval(decreaseTimer,1000);
+    document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
     document.getElementById("inputArea").focus();
+    var boxes=document.getElementsByClassName("word-box");
+    for(let i=0;i<boxes.length;i++){
+        boxes[i].childNodes[1].innerText=boxTime;
+        spanToDivDict.set(boxes[i].childNodes[1],boxes[i])
+        let spanInterval=setInterval(function(){decreaseBoxTimer(boxes[i].childNodes[1])},1000);
+        spanToIntervalDict.set(boxes[i].childNodes[1],spanInterval);
+    }
+
+    timerInterval=setInterval(decreaseTimer,1000);
+
 }
 
+function finishGame(){
+    document.querySelector("#inputArea").disabled=true;
+    clearInterval(timerInterval);
+    for (const [key, value]  of spanToIntervalDict.entries()) {
+        clearInterval(spanToIntervalDict.get(key));
+    }
+}
 
 init();
 </script>
