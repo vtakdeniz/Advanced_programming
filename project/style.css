@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    width: 100%;
+  }
+
+.word-box-container{
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    background-color: orange;
+    width: 50%;
+    height: 50%;
+    margin: 10px;
+}
+
+.word-box{
+    display: flex;
+    justify-content:space-around;
+    flex-wrap: wrap;
+    background-color: aquamarine;
+    width: 20%;
+    height: 20%;
+    margin: 10px;
+    padding: 10px;
+}
