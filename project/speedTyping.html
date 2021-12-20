@@ -75,6 +75,8 @@ function checkWord(){
 async function editDiv(div){
     let word=await getWord();
     div.innerText=word;
+    div.animate({transform: ["rotate(0deg)", "rotate(45deg)","scale(1.5,1.5)",
+   "rotate(90deg)","rotate(270deg)","rotate(360deg)"] },500);
     wordToDivDictionary.set(word,div)
 }
 
@@ -88,6 +90,7 @@ function decreaseTimer(){
 }
 
 async function init(){
+    //timeLeft=prompt("Please enter the time length ");
     await setWords();
     document.querySelector("#timeLeft").innerText=timeLeft;
     timerInterval=setInterval(decreaseTimer,1000);
