@@ -26,6 +26,13 @@ html, body {
     padding: 10px;
 }
 
+.input-box{
+    background-color: greenyellow;
+    width: 70%;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 25px;
+}
 
 .box-timer{
     position: absolute;

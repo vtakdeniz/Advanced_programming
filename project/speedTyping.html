@@ -31,6 +31,19 @@
         <span id="timeLeft"></span>
         <span id="score">Score : 0</span>
     </div>
+    <div class="input-box">
+        <label for="gametime">Game time : </label>
+        <input id="gametime" type="text" oninput="" style="margin:10px">
+        <br>
+        <label for="boxcount">Total box count to finish : </label>
+        <input id="boxcount" type="text" oninput="" style="margin:10px">
+        <br>
+        <label for="boxtimer">Time value for each of the boxes : </label>
+        <input id="boxtimer" type="text" oninput="" style="margin:10px">
+        <br>
+        <button id="startbutton" onclick="init()">Start</button>
+        <button id="finishbutton" onclick="finishGame()">Finish Game</button>
+    </div>
 </body>
 
 <script>
@@ -107,16 +120,16 @@ async function setDivWord(div,success){
 }
 
 function decreaseTimer(){
-    console.log(boxAmount);
-    if(timeLeft===1&&boxAmount<1){
+    timeLeft--;
+    if(timeLeft<1&&boxAmount<1){
         finishGame();
     }
-    timeLeft--;
     document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
 }
 
 function decreaseBoxTimer(span){
     let spanBoxTime=span.innerText;
+    span.innerText=spanBoxTime-1;
     if(spanBoxTime<1){
         span.innerText=boxTime;
         setDivWord(spanToDivDict.get(span),false);
@@ -125,13 +138,31 @@ function decreaseBoxTimer(span){
             finishGame();
         }
     }
-    else{
-        span.innerText=spanBoxTime-1;
-    }
+}
+
+function restart(){
+    finishGame();
+    document.querySelector("#inputArea").disabled=false;
+    document.getElementById("inputArea").focus();
+    init();
 }
 
 async function init(){
+    if(gametime.value!=""){
+        timeLeft=gametime.value;
+    }
+    if(boxcount.value!=""){
+        boxAmount=boxcount.value;
+    }
+    if(boxtimer.value!=""){
+        boxTime=boxtimer.value;
+    }
+    startbutton.innerText="Restart";
+    startbutton.onclick=function(){
+        restart();
+    }
     await setWords();
+    document.querySelector("#inputArea").disabled=false;
     document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
     document.getElementById("inputArea").focus();
     var boxes=document.getElementsByClassName("word-box");
@@ -154,7 +185,6 @@ function finishGame(){
     }
 }
 
-init();
 </script>
 
 </html>
