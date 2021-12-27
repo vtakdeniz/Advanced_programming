@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speed Typing</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="./manifest.webmanifest">
 </head>
 
 <body>
@@ -65,6 +66,9 @@ let animationSuccess={transform: ["rotate(0deg)", "rotate(45deg)","scale(1.5,1.5
 let animationFail={transform: ["scale(1,1)","scale(1.1,1.1)","scale(1.2,1.2)",
         "scale(1.5,1.5)","scale(1.2,1.2)","scale(1.1,1.1)",
         "scale(1,1)"],background:'red'};
+
+
+navigator.serviceWorker.register('./service-worker.js'); 
 
 async function getWords(){
     let words=[];
@@ -188,6 +192,8 @@ function finishGame(){
         clearInterval(spanToIntervalDict.get(key));
     }
 }
+
+
 
 </script>
 
