@@ -112,6 +112,7 @@ function checkWord(){
 }
 
 async function setDivWord(div,success){
+    wordToDivDict.delete(div.firstChild.nodeValue);
     let word=await getWord();
     div.firstChild.nodeValue=word;
     div.childNodes[1].innerText=boxTime;
@@ -141,6 +142,7 @@ function decreaseBoxTimer(span){
 }
 
 function restart(){
+    document.querySelector("#score").innerText="Score : 0";
     finishGame();
     document.querySelector("#inputArea").disabled=false;
     document.getElementById("inputArea").focus();
