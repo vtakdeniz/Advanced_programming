@@ -121,7 +121,7 @@ async function setDivWord(div,success){
 
 function decreaseTimer(){
     timeLeft--;
-    if(timeLeft<1&&boxAmount<1){
+    if(timeLeft<1||boxAmount<1){
         finishGame();
     }
     document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
@@ -148,24 +148,22 @@ function restart(){
 }
 
 async function init(){
-    if(gametime.value!=""){
-        timeLeft=gametime.value;
-    }
-    if(boxcount.value!=""){
-        boxAmount=boxcount.value;
-    }
-    if(boxtimer.value!=""){
-        boxTime=boxtimer.value;
-    }
+
+    timeLeft=gametime.value!=""?gametime.value:50;
+    boxAmount=boxcount.value!=""?boxcount.value:20;
+    boxTime=boxtimer.value!=""?boxtimer.value:25;
+    
     startbutton.innerText="Restart";
     startbutton.onclick=function(){
         restart();
     }
     await setWords();
+
     document.querySelector("#inputArea").disabled=false;
     document.querySelector("#timeLeft").innerText="Time Left : "+timeLeft;
     document.getElementById("inputArea").focus();
-    var boxes=document.getElementsByClassName("word-box");
+    let boxes=document.getElementsByClassName("word-box");
+
     for(let i=0;i<boxes.length;i++){
         boxes[i].childNodes[1].innerText=boxTime;
         spanToDivDict.set(boxes[i].childNodes[1],boxes[i])
@@ -178,6 +176,10 @@ async function init(){
 }
 
 function finishGame(){
+    startbutton.innerText="Restart";
+    startbutton.onclick=function(){
+        restart();
+    }
     document.querySelector("#inputArea").disabled=true;
     clearInterval(timerInterval);
     for (const [key, value]  of spanToIntervalDict.entries()) {
